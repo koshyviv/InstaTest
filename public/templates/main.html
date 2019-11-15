@@ -1,0 +1,315 @@
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjvJjVYmsIkzKWmh5kgBYjEOHOiv_DwIM&libraries=places"></script> -->
+
+<!-- <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjvJjVYmsIkzKWmh5kgBYjEOHOiv_DwIM&libraries=places"></script> -->
+<!-- <script type="text/javascript"
+  src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBjvJjVYmsIkzKWmh5kgBYjEOHOiv_DwIM&libraries=places$callback=callme" ></script> -->
+
+<!-- <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjvJjVYmsIkzKWmh5kgBYjEOHOiv_DwIM&libraries=places" onload="callme()"></script> -->
+
+<!-- <script>
+  function callme() {
+    console.log("call me called")
+  }
+</script> -->
+
+<div id="search-page" class="m-x-auto">
+
+
+  <div class="container">
+
+    <div class="row">
+
+      <!-- DUMMY -->
+      <aside class="col-sm-2">
+        <!-- <input id="searchMapInput" type="text" size="50"> -->
+        <!-- <input type="text" ng-autocomplete ng-model="search.test">
+        <input type="text" id="from" ng-model="search.location_destination" /> -->
+      </aside>
+
+      <aside class="col-sm-8" ng-if="search.booking_stage=='trip'">
+        <div class="card">
+          <article class="card-body">
+            <h4 class="card-title text-center mb-4 mt-1">Trip</h4>
+            <hr>
+
+            <nav class="navbar navbar-expand-sm bg-light justify-content-center">
+              <!-- Links -->
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">One Way</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Round trip</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Outstation</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Airport Drop</a>
+                </li>
+              </ul>
+            </nav>
+
+            <form>
+              <!-- LOCATION SELECTION -->
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
+                      </div>
+                      <input name="" class="form-control" placeholder="Origin" ng-model="search.location_origin"
+                        type="name" disabled>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
+                      </div>
+                      <input name="" id="searchMapInput" class="form-control" placeholder="Destination" type="name"
+                        ng-model="search.location_destination" required>
+                    </div>
+                  </div>
+                </div>
+                <!-- input-group.// -->
+              </div>
+
+              <!-- DATES SELECTION -->
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
+                      </div>
+                      <input name="" class="form-control" placeholder="Depart Date" id="datePicker" type="date"
+                        ng-model="search.time_depart" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
+                      </div>
+                      <input name="" class="form-control" placeholder="Return Date" type="date" disabled>
+                    </div>
+                  </div>
+                </div>
+                <!-- input-group.// -->
+              </div>
+
+              <!-- START BOOKING -->
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block" ng-click="search.change_stage('driver')"
+                  ng-disabled="!search.location_destination && !search.time_depart"> Book
+                </button>
+              </div> <!-- form-group// -->
+              <!-- <p class="text-center"><a href="#" class="btn">Forgot password?</a></p> -->
+            </form>
+          </article>
+        </div>
+        <!-- card.// -->
+
+      </aside>
+
+      <aside class="col-sm-8" ng-if="search.booking_stage=='driver'">
+        <div class="card">
+          <article class="card-body">
+            <h4 class="card-title text-center mb-4 mt-1">Driver</h4>
+            <hr>
+
+            <div class="container">
+              <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0"
+                width="100%">
+                <thead>
+                  <tr>
+                    <th class="th-sm">Select
+                    </th>
+                    <th class="th-sm">Name
+                    </th>
+                    <th class="th-sm">Vehicle
+                    </th>
+                    <th class="th-sm">Languages
+                    </th>
+                    <th class="th-sm">Cost
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="driver in search.drivers">
+                    <td><input type="radio" name="optradio" ng-model="search.selected" value="{{driver}}"
+                        ng-change="search.driver_highlight(driver)"></td>
+                    <td>{{driver.name}}</td>
+                    <td>{{driver.car}}</td>
+                    <td>{{driver.lang}}</td>
+                    <td>{{driver.car}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <hr>
+
+            <!-- START BOOKING -->
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-4">
+                  <button class="btn btn-light btn-block" ng-click="search.change_stage('trip')"> Back </button>
+                </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                  <button type="submit" ng-if="!search.selected_driver" class="btn btn-primary btn-block"
+                    ng-click="search.change_stage('payment')" disabled>
+                    Book
+                  </button>
+                  <button type="submit" ng-if="search.selected_driver" class="btn btn-primary btn-block"
+                    ng-click="search.change_stage('payment')">
+                    Proceed with {{search.selected_driver.name}}
+                  </button>
+                </div>
+              </div>
+            </div> <!-- form-group// -->
+            <!-- <p class="text-center"><a href="#" class="btn">Forgot password?</a></p> -->
+            </form>
+          </article>
+        </div>
+        <!-- card.// -->
+
+      </aside>
+
+      <aside class="col-sm-8" ng-if="search.booking_stage=='paymentuser'">
+        <div class="card">
+          <article class="card-body">
+            <h4 class="card-title text-center mb-4 mt-1">Payment</h4>
+            <hr>
+
+
+            <table class="table-striped table-hover .table-bordered">
+              <tr>
+                <td>Type</td>
+                <td>One Way</td>
+              </tr>
+              <tr>
+                <td>Name</td>
+                <td>{{search.currentUser.name}}</td>
+              </tr>
+              <tr>
+                <td>Origin</td>
+                <td>{{search.location_origin}}</td>
+              </tr>
+              <tr>
+                <td>Destination</td>
+                <td>{{search.location_destination}}</td>
+              </tr>
+              <tr>
+                <td>Date</td>
+                <td>{{search.time_depart}}</td>
+              </tr>
+              <tr>
+                <td>Driver</td>
+                <td>{{search.selected_driver.name}}</td>
+              </tr>
+              <tr>
+                <td>Car</td>
+                <td>{{search.selected_driver.car}}</td>
+              </tr>
+
+              <tr>
+                <td>Cost</td>
+                <td>{{COST}}</td>
+              </tr>
+            </table>
+
+            <!-- START BOOKING -->
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-4">
+                  <button class="btn btn-light btn-block" ng-click="search.change_stage('driver')"> Back </button>
+                </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                  <button type="submit" class="btn btn-primary btn-block" ng-click="search.change_stage('paygate')">
+                    Confrim and Pay
+                  </button>
+                </div>
+              </div>
+            </div> <!-- form-group// -->
+            <!-- <p class="text-center"><a href="#" class="btn">Forgot password?</a></p> -->
+            </form>
+          </article>
+        </div>
+        <!-- card.// -->
+
+      </aside>
+
+      <aside class="col-sm-8" ng-if="search.booking_stage=='login'">
+          <div class="card">
+            <article class="card-body">
+              <h4 class="card-title text-center mb-4 mt-1">Good Time to Login</h4>
+              <hr>
+              <form ng-submit="search.submit()" novalidate>
+
+                  <div id="login-buttons">
+                    <button class="btn btn-primary" ng-click="search.authenticate('facebook')">Sign in with Facebook</button>
+                    <button class="btn btn-info" ng-click="search.authenticate('twitter')">Sign in with Twitter</button>
+                  </div>
+              
+                  <h5>or</h5>
+              
+                  <div id="login-forms" class="form-group m-x-auto" ng-submit="search.submit()">
+                    <input class="form-control email" type="email" name="email" ng-model="search.credentials.email" placeholder="Email" ng-required="true">
+                    <br>
+                    <input class="form-control password" type="password" name="password" ng-model="search.credentials.password" placeholder="Password" ng-required="true">
+                    <br>
+                    <input class="btn btn-outline-danger" type="submit" value="Login" ng-click="search.change_stage('paymentuser')">
+                  </div>
+              
+                  </form>
+
+            </article>
+          </div>
+          <!-- card.// -->
+  
+        </aside>
+
+      <aside class="col-sm-8" ng-if="search.booking_stage=='paygate'">
+        <div class="card">
+          <article class="card-body">
+            <h4 class="card-title text-center mb-4 mt-1">Payment GATEWAY</h4>
+            <hr>
+
+            <!-- START BOOKING -->
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block" ng-click="search.change_stage('payment')"> Print
+                Your Receipt
+              </button>
+            </div> <!-- form-group// -->
+            <!-- <p class="text-center"><a href="#" class="btn">Forgot password?</a></p> -->
+            </form>
+          </article>
+        </div>
+        <!-- card.// -->
+
+      </aside>
+
+      <!-- DUMMY -->
+      <aside class="col-sm-2">
+      </aside>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+<script>
+
+</script>

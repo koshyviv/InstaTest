@@ -1,0 +1,22 @@
+{
+  "name": "travelly",
+  "homepage": "https://github.com/tonio155/Travelly_WDI_Project_3",
+  "authors": [
+    "tonio155 <tonio155@gmail.com>"
+  ],
+  "description": "",
+  "main": "js/app.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "animate.css": "^3.5.2",
+    "bootstrap": "v4.0.0-alpha.4",
+    "ng-autocomplete-places": "^2.0.0"
+  }
+}
